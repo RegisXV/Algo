@@ -9,7 +9,7 @@ def main():
         numbers = generate_random_numbers()
         print(numbers)
         peak_value, peak_position = find_peak_index(numbers)
-        print('TruePeak', peak_position, 'with value', peak_value)
+        print('TruePeakPosition', peak_position, 'with value', peak_value)
 
 def generate_random_numbers():
     # Return a list of 10 random numbers
