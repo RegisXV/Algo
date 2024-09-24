@@ -36,8 +36,6 @@ print("\n")
 selection1 = selectionSort(arr1[:])  # Using slicing to create a copy
 print("Selection Sorted array is: ", selection1)
 print("\n")
-print("Original array is: ", arr1)
-print("\n")
 print("Original array is: ", arr2)
 print("\n")
 bubble2 = bubbleSort(arr2[:])  # Using slicing to create a copy
