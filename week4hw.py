@@ -13,49 +13,45 @@ def bubbleSort(array):
     return array
 
 
+def selectionSort(array):
+    n = len(array)
+    for i in range(n):
+        min_idx = i
+        for j in range(i+1, n):
+            if array[j] < array[min_idx]:
+                min_idx = j
+        
+        array[i], array[min_idx] = array[min_idx], array[i]
+        print("After iteration",i+1,":",array)
 
-def linearSearch(array, x):
-    for i in range(len(array)):
-        print(array,"LinearSearch")
-        if array[i] == x:
-            return i
-    return -1
-
-    
-
-
-
-def binarySearch(array, x):
-    low, high = 0, len(array) - 1
-    mid = 0
-    while low <= high:
-        print(low,mid,high,"BinarySearch")
-        mid = (low + high) // 2
-        if array[mid] == x:
-            return mid
-        elif array[mid] < x:
-            low = mid + 1
-        else:
-            high = mid - 1
-    return -1
+    return array
 
 
 
-
-print("Bubble Sorted array is: ", bubbleSort(arr1))
+print("Original array is: ", arr1)
 print("\n")
-print("Linear Element found at index: ", linearSearch(arr1, 50))
+bubble1 = bubbleSort(arr1[:])  # Using slicing to create a copy
+print("Bubble Sorted array is: ", bubble1)
 print("\n")
-print("Binary Element found at index: ", binarySearch(arr1, 50))
+selection1 = selectionSort(arr1[:])  # Using slicing to create a copy
+print("Selection Sorted array is: ", selection1)
 print("\n")
-print("Bubble Sorted array is: ", bubbleSort(arr2))
+print("Original array is: ", arr1)
 print("\n")
-print("Linear Element found at index: ", linearSearch(arr2, 50))
+print("Original array is: ", arr2)
 print("\n")
-print("Binary Element found at index: ", binarySearch(arr2, 50))
+bubble2 = bubbleSort(arr2[:])  # Using slicing to create a copy
+print("Bubble Sorted array is: ", bubble2)
 print("\n")
-print("Bubble Sorted array is: ", bubbleSort(arr3))
+selection2 = selectionSort(arr2[:])  # Using slicing to create a copy
+print("Selection Sorted array is: ", selection2)
 print("\n")
-print("Linear Element found at index: ", linearSearch(arr3, 50))
+print("Original array is: ", arr3)
 print("\n")
-print ("Binary Element found at index: ", binarySearch(arr3, 50))
+bubble3 = bubbleSort(arr3[:])  # Using slicing to create a copy
+print("Bubble Sorted array is: ", bubble3)
+print("\n")
+selection3 = selectionSort(arr3[:])  # Using slicing to create a copy
+print("Selection Sorted array is: ", selection3)
+print("\n")
+
