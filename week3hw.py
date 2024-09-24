@@ -1,41 +1,59 @@
-import random
+linear_count = 0
+divide_conquer_count = 0
+arr1 = [6,22,34,0,15,65,15,0,34,22,6]
+arr2 = [25,6,54,16,25,12,0,25,6,54,16]
+arr3 = [6,22,34,0,15,65,15,0,34,22,6,65]
 
-def main():
-    highest_peak_value = 0
-    highest_peak_position = 0
+def find_peak_linear(arr):
+    global linear_count
+    linear_count = 0
+    n=len(arr)
+    for i in range(n):
+        linear_count += 1
+        if (i==0 or arr[i]>=arr[i-1]) and (i==n-1 or arr[i]>=arr[i+1]):
+            return arr[i]
+    return None
 
-    for i in range(10):
-        # Create a list of 10 random numbers
-        numbers = generate_random_numbers()
-        print(numbers)
-        peak_value, peak_position = find_peak_index(numbers)
-        print('TruePeakPosition', peak_position, 'with value', peak_value)
+def find_peak_divide_conquer(arr, low, high):
+    global divide_conquer_count
+    divide_conquer_count = 0
+    
+    def helper(arr,low,high):
+        global divide_conquer_count
+        mid = (low+high)//2
+        divide_conquer_count += 1
+        n = len(arr)
+        if (mid==0 or arr[mid] >= arr[mid-1]) and (mid==n-1 or arr[mid] >= arr[mid+1]):
+            return arr[mid]
+        elif mid>0 and arr[mid-1]>arr[mid]:
+            return helper(arr,low,mid-1)
+        else:
+            return helper(arr,mid+1,high)
+        
+    return helper(arr,low,high)
 
-def generate_random_numbers():
-    # Return a list of 10 random numbers
-    return [random.randint(1, 100) for _ in range(10)]
 
-def find_peak_index(numbers):
-    truevalue = 0
-    truepeak = 0
-    n = len(numbers)
+value1 = find_peak_linear(arr1)
+print('linear value',value1)
+print('linear count',linear_count)
 
-    # Handle edge cases for the first and last elements
-    if n == 0:
-        return None, None
-    if n == 1 or numbers[0] >= numbers[1]:
-        truepeak = 1
-        truevalue = numbers[0]
-    if numbers[-1] >= numbers[-2]:
-        truepeak = n
-        truevalue = numbers[-1]
+value4 = find_peak_divide_conquer(arr1,0,len(arr1)-1)
+print('divide conquer',value4)
+print('calculations',divide_conquer_count)
 
-    # Check for a peak in the rest of the array
-    for i in range(1, n - 1):
-        if numbers[i] >= numbers[i - 1] and numbers[i] >= numbers[i + 1] and numbers[i] >= truevalue:
-            truevalue = numbers[i]
-            truepeak = i + 1  # Convert to positional index
+value2 = find_peak_linear(arr2)
+print('linear value',value2)
+print('linear count',linear_count)
 
-    return truevalue, truepeak
+value5 = find_peak_divide_conquer(arr2,0,len(arr2)-1)
+print('divide conquer',value5)
+print('calculations',divide_conquer_count)
 
-main()
+value3 = find_peak_linear(arr3)
+print('linear value',value3)
+print('linear count',linear_count)
+
+value6 = find_peak_divide_conquer(arr3,0,len(arr3)-1)
+print('divide conquer',value6)
+print('calculations',divide_conquer_count)
+
