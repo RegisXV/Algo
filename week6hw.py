@@ -75,6 +75,9 @@ class PSO():
         # establish the swarm
         swarm = [Particle(x0) for _ in range(num_particles)]
 
+        # list to store the best error at each iteration
+        best_errors = []
+
         # begin optimization loop
         for i in range(maxiter):
             for particle in swarm:
@@ -85,6 +88,9 @@ class PSO():
                     pos_best_g = np.copy(particle.position_i)
                     err_best_g = particle.err_i
 
+            # append the best error of this iteration to the list
+            best_errors.append(err_best_g)
+
             for particle in swarm:
                 particle.update_velocity(pos_best_g)
                 particle.update_position(bounds)
@@ -94,12 +100,12 @@ class PSO():
         print(pos_best_g)
         print(err_best_g)
         
-        # plotting
-        plt.figure()
-        plt.plot(pos_best_g)
+        # plotting best error by iterations
+        plt.figure(figsize=(10, 6))
+        plt.plot(best_errors)
         plt.title(f'PSO Algorithm - {costFuncName}')
-        plt.xlabel('Dimension')
-        plt.ylabel('Best Position')
+        plt.xlabel('Iteration')
+        plt.ylabel('Best Error')
         plt.grid(True)
         plt.show()
 
