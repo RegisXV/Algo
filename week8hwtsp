@@ -1,0 +1,52 @@
+import heapq
+import pandas as pd
+
+# Define the graph as an adjacency matrix (distance between cities)
+graph = {
+    'A': {'B': 10, 'C': 15, 'D': 20},
+    'B': {'A': 10, 'C': 35, 'D': 25},
+    'C': {'A': 15, 'B': 35, 'D': 30},
+    'D': {'A': 20, 'B': 25, 'C': 30},
+}
+
+def dijkstra(graph, start):
+    # Priority queue to store (distance, vertex)
+    queue = [(0, start)]
+    distances = {vertex: float('infinity') for vertex in graph}
+    previous_nodes = {vertex: None for vertex in graph}  # To store previous nodes
+    distances[start] = 0
+
+    while queue:
+        current_distance, current_vertex = heapq.heappop(queue)
+
+        # If a shorter path to current_vertex has been found, skip processing
+        if current_distance > distances[current_vertex]:
+            continue
+
+        # Examine adjacent vertices
+        for neighbor, weight in graph[current_vertex].items():
+            distance = current_distance + weight
+
+            # If a shorter path to the neighbor has been found, update its distance
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                previous_nodes[neighbor] = current_vertex  # Track the previous node
+                heapq.heappush(queue, (distance, neighbor))
+
+    # Return both the shortest distances and the previous nodes
+    return distances, previous_nodes
+
+# Find the shortest path for each pair of cities
+results = []
+
+for city in graph:
+    distances, previous_nodes = dijkstra(graph, city)
+    for node in distances:
+        results.append([city, node, distances[node], previous_nodes[node]])
+
+# Convert the result to a pandas DataFrame for better readability
+df = pd.DataFrame(results, columns=['Source Node', 'Target Node', 'Shortest Distance', 'Previous Node'])
+
+# Display the result in a table
+print("Shortest path distances between cities, including previous node:")
+df
